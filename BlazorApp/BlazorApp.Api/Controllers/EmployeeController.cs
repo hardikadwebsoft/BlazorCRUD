@@ -43,7 +43,7 @@ namespace BlazorApp.Api.Controllers
         public async Task UpdateEmployee(EmployeeViewModel employeeViewModel)
         {
 
-            await _employeeRepository.Update(employeeViewModel,false);
+            await _employeeRepository.Update(employeeViewModel);
         }
 
         [Route("DeleteEmployee")]

@@ -50,13 +50,14 @@
     switch (activeSections.Name)
     {
         case "List":
-            <h2>Employee List</h2>
-            <input type="text" placeholder="Search for Names..." @bind="searchstring" />
-            <button class="btn-primary" @onclick="Search">Search</button>
-            @if (!string.IsNullOrWhiteSpace(errormessage))
-            {
-                <p style="color: red;">@errormessage</p>
-            }
+        <h2>Employee List</h2>
+         <div class="col-md-6 ">
+         <div class="btn-group">
+           <input type="text" placeholder="Search text.." class="form-control" @bind="searchstring" />
+            <button type="button" class="btn btn-primary" @onclick="Search">Search</button>
+         </div>
+          
+           </div>
             <br/>
             <div class="row pt-2">
                 <div class="col-md-12 offset-md-0 " style="border-block:2px solid #B0CFE0;text-align:center">
@@ -94,13 +95,13 @@
             </div>
             break;
         case "Add":
-            <Employee IsAddSection=true />
+            <Employee IsAddSection=true View="Create"/>
             break;
         case "Edit":
-            <Employee EmployeeViewModel="employee" />
+            <Employee EmployeeViewModel="employee" View="Update"/>
             break;
         case "Delete":
-            <Employee EmployeeViewModel="employee" />
+            <Employee EmployeeViewModel="employee" View="Delete"/>
             break;
     }
 }
@@ -123,6 +124,7 @@
             sections.Add(new Section() { Name = ServiceConstant.AddSection, IsActive = false });
             sections.Add(new Section() { Name = ServiceConstant.EditSection, IsActive = false });
             sections.Add(new Section() { Name = ServiceConstant.DeleteSection, IsActive = false });
+
             activeSections = sections.FirstOrDefault();
         }
 
@@ -156,7 +158,7 @@
     {
         if (string.IsNullOrWhiteSpace(searchstring))
         {
-            errormessage = "Please enter a search term";
+            RefreshMe();
         }
         else
         {

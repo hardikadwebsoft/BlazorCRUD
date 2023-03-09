@@ -20,7 +20,7 @@ namespace BlazorApp.Service
         //PostEmployee
         Task Create(EmployeeViewModel employeeViewModel);
         //UpdateEmployee
-        Task Update(EmployeeViewModel employeeViewModel,bool isTest);
+        Task Update(EmployeeViewModel employeeViewModel);
         //DeleteEmployee
         Task Delete(int id);
 
@@ -82,15 +82,12 @@ namespace BlazorApp.Service
             }
         }
 
-        public async Task Update(EmployeeViewModel employeeViewModel,bool isTest)
+        public async Task Update(EmployeeViewModel employeeViewModel)
         {
             try
             {
                 var employee = _mapper.Map<Employee>(employeeViewModel);
-
-                if (!isTest)
-                    _context.Entry(employee).State = EntityState.Modified;
-
+                _context.Entry(employee).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
