@@ -1,0 +1,185 @@
+﻿@page "/"
+@using BlazorApp.Models.Helpers;
+@using BlazorApp.Models.ViewModels;
+@using BlazorApp.Service;
+@using System.Text.Json
+@using BlazorApp.Service.Repository;
+@using System.Net.Http.Json;
+@inject IRefreshService RefreshService
+@inject NavigationManager navigationManager
+@inject HttpClient _client
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    #myInput {
+        background-image: url('/css/searchicon.png');
+        background-position: 10px 10px;
+        background-repeat: no-repeat;
+        width: 100%;
+        font-size: 16px;
+        padding: 12px 20px 12px 40px;
+        border: 1px solid #ddd;
+        margin-bottom: 12px;
+    }
+
+    #myTable {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #ddd;
+        font-size: 18px;
+    }
+
+        #myTable th, #myTable td {
+            text-align: left;
+            padding: 12px;
+        }
+
+        #myTable tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+            #myTable tr.header, #myTable tr:hover {
+                background-color: #f1f1f1;
+            }
+</style>
+
+@{
+    switch (activeSections.Name)
+    {
+        case "List":
+            <h2>Employee List</h2>
+            <input type="text" placeholder="Search for Names..." @bind="searchstring" />
+            <button class="btn-primary" @onclick="Search">Search</button>
+            @if (!string.IsNullOrWhiteSpace(errormessage))
+            {
+                <p style="color: red;">@errormessage</p>
+            }
+            <br/>
+            <div class="row pt-2">
+                <div class="col-md-12 offset-md-0 " style="border-block:2px solid #B0CFE0;text-align:center">
+                    <table class="table text-dark">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>DateOfBirth</th>
+                                <th>Department</th>
+                                <th>
+                                    <button type="button" class="btn btn-sm btn-success" @onclick="AddEmployee"><i class="oi oi-plus"> Create</i></button>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var emp in employees)
+                            {
+                                <tr class="search">
+                                    <td>@emp.Name</td>
+                                    <td>@emp.Email</td>
+                                    <td>@emp.DateOfBirth</td>
+                                    <td>@emp.Department</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-warning" @onclick="(() => ShowEmployee(emp))"><i class="oi oi-pencil"></i></button>
+                                            <button type="button" class="btn btn-sm btn-danger" @onclick="(() => DeleteEmployee(emp))"><i class="oi oi-trash"></i></button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            break;
+        case "Add":
+            <Employee IsAddSection=true />
+            break;
+        case "Edit":
+            <Employee EmployeeViewModel="employee" />
+            break;
+        case "Delete":
+            <Employee EmployeeViewModel="employee" />
+            break;
+    }
+}
+
+
+@code {
+
+    private IEnumerable<EmployeeViewModel> employees = new List<EmployeeViewModel>();
+    private EmployeeViewModel employee = new();
+    private List<Section> sections = new();
+    private Section activeSections = new();
+    private string searchstring;
+    private string errormessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (sections.Count() == 0)
+        {
+            sections.Add(new Section() { Name = ServiceConstant.ListSection, IsActive = true });
+            sections.Add(new Section() { Name = ServiceConstant.AddSection, IsActive = false });
+            sections.Add(new Section() { Name = ServiceConstant.EditSection, IsActive = false });
+            sections.Add(new Section() { Name = ServiceConstant.DeleteSection, IsActive = false });
+            activeSections = sections.FirstOrDefault();
+        }
+
+        employees = await _client.GetFromJsonAsync<List<EmployeeViewModel>>("https://localhost:7196/api/Employee/GetEmployeeList");
+
+        RefreshService.RefreshRequested += RefreshMe;
+    }
+
+    async void RefreshMe()
+    {
+        employees = await _client.GetFromJsonAsync<List<EmployeeViewModel>>("https://localhost:7196/api/Employee/GetEmployeeList");
+        SetActiveSection(ServiceConstant.ListSection);
+        StateHasChanged();
+    }
+
+    void AddEmployee()
+    {
+        SetActiveSection(ServiceConstant.AddSection);
+    }
+    void ShowEmployee(EmployeeViewModel model)
+    {
+        employee = model;
+        SetActiveSection(ServiceConstant.EditSection);
+    }
+    void DeleteEmployee(EmployeeViewModel model)
+    {
+        employee = model;
+        SetActiveSection(ServiceConstant.DeleteSection);
+    }
+    async void Search()
+    {
+        if (string.IsNullOrWhiteSpace(searchstring))
+        {
+            errormessage = "Please enter a search term";
+        }
+        else
+        {
+            employees = await _client.GetFromJsonAsync<List<EmployeeViewModel>>("https://localhost:7196/api/Employee/SearchEmployee/" + searchstring);
+            SetActiveSection(ServiceConstant.ListSection);
+            StateHasChanged();
+        }
+    }
+
+    private void SetActiveSection(string name)
+    {
+        var index = sections.FindIndex(r => r.IsActive == true);
+        var data = sections.Where(x => x.IsActive == true).FirstOrDefault();
+        data.IsActive = false;
+
+        if (index != -1)
+        {
+            sections[index] = data;
+        }
+
+        var result = sections.Where(x => x.Name == name).FirstOrDefault();
+        activeSections = result;
+        activeSections.IsActive = true;
+    }
+
+}

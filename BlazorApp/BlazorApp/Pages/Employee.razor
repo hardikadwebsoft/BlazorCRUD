@@ -1,0 +1,78 @@
+﻿@using BlazorApp.Models.Models;
+@using BlazorApp.Models.ViewModels
+@using BlazorApp.Service;
+@using BlazorApp.Service.Repository;
+@inject NavigationManager navigationManager
+@inject IRefreshService RefreshService
+@inject HttpClient _client
+
+@if (IsAddSection)
+{
+    <h3>Create Employee :</h3>
+}
+else
+{
+    <h3>Edit : "@EmployeeViewModel.Name"</h3>
+}
+<EditForm Model="EmployeeViewModel" OnSubmit="HandleSubmit">
+
+    <div>
+        <label for="name">Name</label>
+        <InputText id="name" @bind-Value="EmployeeViewModel.Name" class="form-control"></InputText>
+    </div>
+    <div>
+        <label for="developer">Email</label>
+        <InputText id="developer" @bind-Value="EmployeeViewModel.Email" class="form-control"></InputText>
+    </div>
+    <div>
+        <label for="dateofbirth">Date Of Birth</label>
+        <InputText id="dateofbirth" @bind-Value="EmployeeViewModel.DateOfBirth" class="form-control"></InputText>
+    </div>
+    <div>
+        <label for="department">Department</label>
+        <InputText id="department" @bind-Value="EmployeeViewModel.Department" class="form-control"></InputText>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">@btnText</button>
+    @if (!IsAddSection)
+    {
+        <button type="button" class="btn btn-danger" @onclick="DeleteEmployee">Delete</button>
+    }
+
+</EditForm>
+
+
+@code {
+    [Parameter]
+    public EmployeeViewModel EmployeeViewModel { get; set; } = new();
+
+    [Parameter]
+    public bool IsAddSection { get; set; } = false;
+
+    private string btnText = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        btnText = IsAddSection ? "Save" : "Update";
+    }
+
+    async Task HandleSubmit()
+    {
+        if (IsAddSection)
+        {
+            await _client.PostAsJsonAsync<EmployeeViewModel>("https://localhost:7196/api/Employee/PostEmployee", EmployeeViewModel);
+        }
+        else
+        {
+            await _client.PutAsJsonAsync<EmployeeViewModel>("https://localhost:7196/api/Employee/UpdateEmployee", EmployeeViewModel);
+        }
+        RefreshService.CallRequestRefresh();
+    }
+
+    async Task DeleteEmployee()
+    {
+        //var response = await _client.DeleteAsync($"https://localhost:7196/api/Employee/DeleteEmployee/{EmployeeViewModel.Id}");
+        await _client.DeleteAsync("https://localhost:7196/api/Employee/DeleteEmployee?id="+EmployeeViewModel.Id);
+        RefreshService.CallRequestRefresh();
+    }
+}
