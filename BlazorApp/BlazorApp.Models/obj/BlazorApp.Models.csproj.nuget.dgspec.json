@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\purvik\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj": {}
+    "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj": {}
   },
   "projects": {
-    "D:\\purvik\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj": {
+    "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\purvik\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj",
+        "projectUniqueName": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj",
         "projectName": "BlazorApp.Models",
-        "projectPath": "D:\\purvik\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj",
+        "projectPath": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj",
         "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "D:\\purvik\\BlazorApp\\BlazorApp.Models\\obj\\",
+        "outputPath": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

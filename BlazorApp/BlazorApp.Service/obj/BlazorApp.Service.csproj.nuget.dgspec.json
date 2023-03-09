@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\purvik\\BlazorApp\\BlazorApp.Service\\BlazorApp.Service.csproj": {}
+    "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Service\\BlazorApp.Service.csproj": {}
   },
   "projects": {
-    "D:\\purvik\\BlazorApp\\BlazorApp.Data\\BlazorApp.Data.csproj": {
+    "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Data\\BlazorApp.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\purvik\\BlazorApp\\BlazorApp.Data\\BlazorApp.Data.csproj",
+        "projectUniqueName": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Data\\BlazorApp.Data.csproj",
         "projectName": "BlazorApp.Data",
-        "projectPath": "D:\\purvik\\BlazorApp\\BlazorApp.Data\\BlazorApp.Data.csproj",
+        "projectPath": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Data\\BlazorApp.Data.csproj",
         "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "D:\\purvik\\BlazorApp\\BlazorApp.Data\\obj\\",
+        "outputPath": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Data\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -67,14 +67,14 @@
         }
       }
     },
-    "D:\\purvik\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj": {
+    "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\purvik\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj",
+        "projectUniqueName": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj",
         "projectName": "BlazorApp.Models",
-        "projectPath": "D:\\purvik\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj",
+        "projectPath": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj",
         "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "D:\\purvik\\BlazorApp\\BlazorApp.Models\\obj\\",
+        "outputPath": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -124,14 +124,14 @@
         }
       }
     },
-    "D:\\purvik\\BlazorApp\\BlazorApp.Service\\BlazorApp.Service.csproj": {
+    "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Service\\BlazorApp.Service.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\purvik\\BlazorApp\\BlazorApp.Service\\BlazorApp.Service.csproj",
+        "projectUniqueName": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Service\\BlazorApp.Service.csproj",
         "projectName": "BlazorApp.Service",
-        "projectPath": "D:\\purvik\\BlazorApp\\BlazorApp.Service\\BlazorApp.Service.csproj",
+        "projectPath": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Service\\BlazorApp.Service.csproj",
         "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-        "outputPath": "D:\\purvik\\BlazorApp\\BlazorApp.Service\\obj\\",
+        "outputPath": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Service\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -151,11 +151,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\purvik\\BlazorApp\\BlazorApp.Data\\BlazorApp.Data.csproj": {
-                "projectPath": "D:\\purvik\\BlazorApp\\BlazorApp.Data\\BlazorApp.Data.csproj"
+              "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Data\\BlazorApp.Data.csproj": {
+                "projectPath": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Data\\BlazorApp.Data.csproj"
               },
-              "D:\\purvik\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj": {
-                "projectPath": "D:\\purvik\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj"
+              "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj": {
+                "projectPath": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj"
               }
             }
           }

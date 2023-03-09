@@ -566,11 +566,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\purvik\\BlazorApp\\BlazorApp.Data\\BlazorApp.Data.csproj",
+      "projectUniqueName": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Data\\BlazorApp.Data.csproj",
       "projectName": "BlazorApp.Data",
-      "projectPath": "D:\\purvik\\BlazorApp\\BlazorApp.Data\\BlazorApp.Data.csproj",
+      "projectPath": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Data\\BlazorApp.Data.csproj",
       "packagesPath": "C:\\Users\\hp\\.nuget\\packages\\",
-      "outputPath": "D:\\purvik\\BlazorApp\\BlazorApp.Data\\obj\\",
+      "outputPath": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Data\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

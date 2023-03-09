@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9kYodSX7oTkwJJzmZXZlGouQsIyv3t73hAREMcbkAm9LEcBPQfL/mFZe7HoFEJ/18/V+wu+6sZ117EVaCK/FMQ==",
+  "dgSpecHash": "Yzfunfi5P0e8e+7O6er3woUxeeqo1n/yxXnxFrWP4i2L3gHTV6yY0fwOy3x5y0oOK4Sl2dGjnVi/UtrzNbkv9w==",
   "success": true,
-  "projectFilePath": "D:\\purvik\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj",
+  "projectFilePath": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp.Models\\BlazorApp.Models.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

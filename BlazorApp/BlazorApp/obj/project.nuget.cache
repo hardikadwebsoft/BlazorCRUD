@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "AtkLfrzlqO1SKP4GLIhAOzQVoLZjLVStatDNLS5819iEge8nG//LM86p1AtuZG2/SLQxMQHPiH0RV+uCNitgGw==",
+  "dgSpecHash": "yLK075l9QwFtsVRNAMKtfNVvH/RWxmV1IZMCh4W5hx5v/mHxn/uC6VKSiL0KbYsA0XwWpmWvnkmzEPe/0L7Hhw==",
   "success": true,
-  "projectFilePath": "D:\\purvik\\BlazorApp\\BlazorApp\\BlazorApp.csproj",
+  "projectFilePath": "H:\\Projects\\BlazorDemo\\BlazorApp\\BlazorApp\\BlazorApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\hp\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\hp\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.0\\automapper.extensions.microsoft.dependencyinjection.12.0.0.nupkg.sha512",
