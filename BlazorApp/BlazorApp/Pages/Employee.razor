@@ -1,7 +1,9 @@
 ﻿@using BlazorApp.Models.Models;
 @using BlazorApp.Models.ViewModels
+@using BlazorApp.Models.Helpers;
 @using BlazorApp.Service;
 @using BlazorApp.Service.Repository;
+@using System.ComponentModel.DataAnnotations
 @inject NavigationManager navigationManager
 @inject IRefreshService RefreshService
 @inject HttpClient _client
@@ -25,32 +27,44 @@
     <h3>Delete Employee :</h3>
 }
 
-<EditForm Model="EmployeeViewModel" OnSubmit="HandleSubmit">
-
+<EditForm Model="EmployeeViewModel"  OnValidSubmit="HandleSubmit" >
+    <DataAnnotationsValidator/>
     @if (View == "Create" || View == "Update")
     {
         <div class="col-md-6 ">
             <label for="name">Name</label>
             <InputText id="name" @bind-Value="EmployeeViewModel.Name" class="form-control"></InputText>
+             <ValidationMessage For="@(()=>EmployeeViewModel.Name)" />
         </div>
         <div class="col-md-6 ">
             <label for="developer">Email</label>
             <InputText id="developer" @bind-Value="EmployeeViewModel.Email" class="form-control"></InputText>
+            <ValidationMessage For="@(()=>EmployeeViewModel.Email)" />
         </div>
         <div class="col-md-6 ">
             <label for="dateofbirth">Date Of Birth</label>
-            <InputText id="dateofbirth" placeholder="mm/dd/yyyy" @bind-Value="EmployeeViewModel.DateOfBirth" class="form-control"></InputText>
+            <InputDate id="dateofbirth" placeholder="dd MM yyyy" @bind-Value="dateTime" class="form-control" ></InputDate>
+            <ValidationMessage For="@(()=>EmployeeViewModel.DateOfBirth)" />
         </div>
         <div class="col-md-6 ">
             <label for="department">Department</label>
-            <InputText id="department" @bind-Value="EmployeeViewModel.Department" class="form-control"></InputText>
+           <InputSelect id="department" @bind-Value="EmployeeViewModel.Department" class="form-control">
+                @foreach (var department in EmployeeViewModel.Departments)
+                {
+                    <option value="@department.Name">@department.Name</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(()=>EmployeeViewModel.Department)" />
         </div>
+        
         <br />
         <div class="col-md-6 ">
             <button type="submit" class="btn btn-primary">@btnText</button>
             <button type="button" class="btn btn-primary" @onclick="Cancel">Cancel</button>
 
         </div>
+
+
     }
 
     @if (View == "Delete")
@@ -83,27 +97,43 @@
 
     private string btnText = string.Empty;
 
+    [Required(ErrorMessage = "BirthDate is required")]
+    private DateTime dateTime = DateTime.Now;
+
     protected override void OnInitialized()
     {
         btnText = IsAddSection ? "Save" : "Update";
+        if (!IsAddSection)
+            dateTime =Convert.ToDateTime(EmployeeViewModel.DateOfBirth);
+        EmployeeViewModel.Departments = new List<DepartmentViewModel>
+        {
+            new DepartmentViewModel(1, "Development"),
+            new DepartmentViewModel(2, "Testing"),
+            new DepartmentViewModel(3, "Marketing"),
+            new DepartmentViewModel(4, "Sales"),
+            new DepartmentViewModel(5, "Support"),
+            new DepartmentViewModel(6, "IT"),
+        };
     }
 
     async Task HandleSubmit()
     {
+        EmployeeViewModel.DateOfBirth = dateTime.ToString("dd MMM yyyy");
         if (IsAddSection)
         {
-            await _client.PostAsJsonAsync<EmployeeViewModel>("https://localhost:7196/api/Employee/PostEmployee", EmployeeViewModel);
+            await _client.PostAsJsonAsync<EmployeeViewModel>(Environment.GetEnvironmentVariable("ApiURL") + ServiceConstant.CreateEmployee , EmployeeViewModel);
         }
         else
         {
-            await _client.PutAsJsonAsync<EmployeeViewModel>("https://localhost:7196/api/Employee/UpdateEmployee", EmployeeViewModel);
+            await _client.PutAsJsonAsync<EmployeeViewModel>(Environment.GetEnvironmentVariable("ApiURL") + ServiceConstant.UpdateEmployee, EmployeeViewModel);
         }
         RefreshService.CallRequestRefresh();
     }
+   
 
     async Task DeleteEmployee()
     {
-        await _client.DeleteAsync("https://localhost:7196/api/Employee/DeleteEmployee?id=" + EmployeeViewModel.Id);
+        await _client.DeleteAsync(Environment.GetEnvironmentVariable("ApiURL") +ServiceConstant.DeleteEmployee + EmployeeViewModel.Id);
         RefreshService.CallRequestRefresh();
     }
 

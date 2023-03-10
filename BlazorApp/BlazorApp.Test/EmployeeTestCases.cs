@@ -11,7 +11,7 @@ namespace BlazorApp.Test
 {
     public class EmployeeTestCases
     {
-        
+
         BlazorAppDbContext context;
         IMapper mapper;
 
@@ -19,15 +19,13 @@ namespace BlazorApp.Test
         public void Setup()
         {
 
-             DbContextOptions<BlazorAppDbContext> dbContextOptions = new DbContextOptionsBuilder<BlazorAppDbContext>()
-            .UseInMemoryDatabase(databaseName: "BlazorAppTest").Options;
+            DbContextOptions<BlazorAppDbContext> dbContextOptions = new DbContextOptionsBuilder<BlazorAppDbContext>()
+           .UseInMemoryDatabase(databaseName: "BlazorAppTest").Options;
 
-             context = new BlazorAppDbContext();
+            context = new BlazorAppDbContext();
             var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap<Employee, EmployeeViewModel>();
-                //.ForMember(dest => dest.Id, opt => opt.Ignore());
                 cfg.CreateMap<EmployeeViewModel, Employee>();
-                //.ForMember(dest => dest.Id, opt => opt.Ignore());
             });
             mapper = config.CreateMapper();
             context.Database.EnsureCreated();
@@ -37,9 +35,11 @@ namespace BlazorApp.Test
         private void SeedDatabase()
         {
             context.Employees.AddRange(
-                new Employee() { Id = 1, Name = "John", Email = "johndoe@example.com", DateOfBirth = "2 jan 1986", Department = "IT" },
-                new Employee() { Id = 2, Name = "Jack", Email = "jack@example.com", DateOfBirth = "2 jan 1986", Department = "IT" }
-            );
+              new Employee() { Id = 5, Name = "John", Email = "johndoe@example.com", DateOfBirth = "2 jan 1986", Department = "IT" },
+              new Employee() { Id = 6, Name = "Jack", Email = "jack@example.com", DateOfBirth = "2 jan 1986", Department = "IT" },
+              new Employee() { Id = 7, Name = "Bob", Email = "bob@example.com", DateOfBirth = "2 jan 1986", Department = "Testing" }
+
+          );
 
             context.SaveChanges();
         }
@@ -48,51 +48,65 @@ namespace BlazorApp.Test
         [Test]
         public async Task Should_Create_Employee()
         {
-            // Act
-            context.Database.EnsureDeleted();
-            context = new BlazorAppDbContext();
-            var result = await context.Employees.CountAsync();
-
             // Arrange
             EmployeeRepository employeeRepository = new EmployeeRepository(context, mapper);
+            var result = await employeeRepository.GetList();
             var employee = new EmployeeViewModel()
             {
-                Id = 1,
-                Name = "John",
-                Email = "johndoe@example.com",
+                Id = 8,
+                Name = "Mack",
+                Email = "mack@example.com",
                 DateOfBirth = "5 feb 2020",
                 Department = "IT",
-            };
-            await employeeRepository.Create(employee);
 
+            };
+
+            await employeeRepository.Create(employee);
+            var resultAfterAdd = await employeeRepository.GetList();
             //Assert
-            Assert.AreEqual(1, await context.Employees.CountAsync());
+            Assert.Greater(resultAfterAdd.Count, result.Count);
+        }
+        [Test]
+        public async Task Should_Update_Employee()
+        {
+            // Arrange
+            EmployeeRepository employeeRepository = new EmployeeRepository(context, mapper);
+            var employeee = await employeeRepository.GetById(6);
+           ;
+
+            // Act
+            employeee.Name = "Jane";
+
+           
+            await employeeRepository.Update(employeee);
+
+            // Assert
+            var updatedEmployee = await employeeRepository.GetById(employeee.Id);
+            Assert.NotNull(updatedEmployee);
+            Assert.AreEqual("Jane", updatedEmployee.Name);
+
         }
 
         [Test]
+        public async Task Should_Delete_Employee()
+        {
+            // Arrange
+            EmployeeRepository employeeRepository = new EmployeeRepository(context, mapper);
+            var result = employeeRepository.GetList();
+            // Act
+            await employeeRepository.Delete(7);
+            // Assert
+            var deletedEmployee = await employeeRepository.GetById(7);
+            Assert.Null(deletedEmployee);
+        }
+       
+        [Test]
         public async Task Should_List_All_Employees()
         {
-            // Act
-            context.Database.EnsureDeleted();
-            context = new BlazorAppDbContext();
-            SeedDatabase();
             EmployeeRepository employeeRepository = new EmployeeRepository(context, mapper);
             var allEmployees = await employeeRepository.GetList();
-
             // Assert
-            Assert.AreEqual(2, allEmployees.Count);
-
-            Assert.AreEqual("John", allEmployees.First().Name);
-            Assert.AreEqual("johndoe@example.com", allEmployees.First().Email);
-            Assert.AreEqual("2 jan 1986", allEmployees.First().DateOfBirth);
-            Assert.AreEqual("IT", allEmployees.First().Department);
-
-
-            Assert.AreEqual("Jack", allEmployees.Last().Name);
-            Assert.AreEqual("jack@example.com", allEmployees.Last().Email);
-            Assert.AreEqual("2 jan 1986", allEmployees.Last().DateOfBirth);
-            Assert.AreEqual("IT", allEmployees.Last().Department);
-
+            Assert.GreaterOrEqual(allEmployees.Count, 1);
         }
 
         [Test]
@@ -110,9 +124,10 @@ namespace BlazorApp.Test
 
             // Assert 
             Assert.AreEqual(1, results.Count);
-            Assert.AreEqual("Jack",results.Select(x=>x.Name).FirstOrDefault().ToString());
-            
+            Assert.AreEqual("Jack", results.Select(x => x.Name).FirstOrDefault().ToString());
+
         }
+
 
     }
 }

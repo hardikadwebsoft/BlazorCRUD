@@ -35,6 +35,7 @@ namespace BlazorApp.Service
         public EmployeeRepository(BlazorAppDbContext context,IMapper mapper)
         {
             _context = context;
+            _context.Database.EnsureCreated();
             _mapper = mapper;
         }
 
@@ -44,7 +45,7 @@ namespace BlazorApp.Service
             var results = new List<EmployeeViewModel>();
             try
             {
-                var employees = await _context.Employees.ToListAsync();
+                var employees = await _context.Employees.AsNoTracking().ToListAsync();
                 results = _mapper.Map<List<EmployeeViewModel>>(employees);
                 return results;
             }
@@ -58,7 +59,8 @@ namespace BlazorApp.Service
         {
             try
             {
-                var employee = await _context.Employees.Where(x=>x.Id == id).FirstOrDefaultAsync();
+                var employee =await  _context.Employees.AsNoTracking().FirstOrDefaultAsync(x=>x.Id == id);
+                          
                 var result = _mapper.Map<EmployeeViewModel>(employee);
                 return result;
             }
@@ -73,7 +75,7 @@ namespace BlazorApp.Service
             try
             {
                 var data = _mapper.Map<Employee>(employeeViewModel);
-                _context.Employees.Add(data);
+                await _context.Employees.AddAsync(data);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -87,7 +89,8 @@ namespace BlazorApp.Service
             try
             {
                 var employee = _mapper.Map<Employee>(employeeViewModel);
-                _context.Entry(employee).State = EntityState.Modified;
+                _context.ChangeTracker.Clear();
+                _context.Employees.Update(employee);
                 await _context.SaveChangesAsync();
             }
             catch (Exception ex)
@@ -133,5 +136,9 @@ namespace BlazorApp.Service
             }
         }
 
+       
+
     }
+
+   
 }

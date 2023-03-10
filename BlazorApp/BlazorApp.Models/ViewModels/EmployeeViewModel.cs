@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -10,17 +11,18 @@ namespace BlazorApp.Models.ViewModels
     public class EmployeeViewModel
     {
 
-        [JsonPropertyName("id")]
         public int Id { get; set; }
 
-        [JsonPropertyName("name")]
+        [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
-        [JsonPropertyName("email")]
+        [EmailAddress]
+        [Required(ErrorMessage ="Email is required")]
         public string Email { get; set; }
-        [JsonPropertyName("dateOfBirth")]
+        
         public string DateOfBirth { get; set; }
-        [JsonPropertyName("department")]
         public string Department { get; set; }
+
+        public List<DepartmentViewModel> Departments { get; set; }
     }
 
     

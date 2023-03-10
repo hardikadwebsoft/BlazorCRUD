@@ -23,30 +23,30 @@ namespace BlazorApp.Api.Controllers
 
 
         [HttpGet]
-        [Route("GetEmployeeList")]
-        public async Task<List<EmployeeViewModel>> GetEmployeeList()
+        [Route("GetList")]
+        public async Task<List<EmployeeViewModel>> GetList()
         {
             var empList = await _employeeRepository.GetList();
             return empList;
         }
 
-        [Route("PostEmployee")]
+        [Route("Create")]
         [HttpPost]
-        public async Task<EmployeeViewModel> PostEmployee(EmployeeViewModel employeeViewModel)
+        public async Task<EmployeeViewModel> Create(EmployeeViewModel employeeViewModel)
         {
             await _employeeRepository.Create(employeeViewModel);
             return employeeViewModel;
         }
 
-        [Route("UpdateEmployee")]
+        [Route("Update")]
         [HttpPut]
-        public async Task UpdateEmployee(EmployeeViewModel employeeViewModel)
+        public async Task Update(EmployeeViewModel employeeViewModel)
         {
 
             await _employeeRepository.Update(employeeViewModel);
         }
 
-        [Route("DeleteEmployee")]
+        [Route("Delete")]
         [HttpDelete]
         public async Task DeleteEmployee(int id)
         {
@@ -54,7 +54,7 @@ namespace BlazorApp.Api.Controllers
         }
 
         [HttpGet]
-        [Route("SearchEmployee/{searchString}")]
+        [Route("Search/{searchString}")]
         public async Task<List<EmployeeViewModel>> Search(string searchString)
         {
             var empList = await _employeeRepository.Search(searchString);
