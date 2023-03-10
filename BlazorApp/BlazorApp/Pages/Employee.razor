@@ -19,9 +19,6 @@
 {
     <h3>Update Employee :</h3>
 }
-
-
-
 @if (View == "Delete")
 {
     <h3>Delete Employee :</h3>
@@ -48,7 +45,7 @@
         </div>
         <div class="col-md-6 ">
             <label for="department">Department</label>
-           <InputSelect id="department" @bind-Value="EmployeeViewModel.Department" class="form-control">
+           <InputSelect id="department" @bind-Value="EmployeeViewModel.Department" class="form-control form-select">
                 @foreach (var department in EmployeeViewModel.Departments)
                 {
                     <option value="@department.Name">@department.Name</option>

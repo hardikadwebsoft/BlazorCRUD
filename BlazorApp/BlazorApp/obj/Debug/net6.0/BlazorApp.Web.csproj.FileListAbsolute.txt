@@ -1,8 +1,0 @@
-D:\purvik\projects\Test Project\BlazorApp\BlazorApp\obj\Debug\net6.0\BlazorApp.Web.csproj.AssemblyReference.cache
-D:\purvik\projects\Test Project\BlazorApp\BlazorApp\obj\Debug\net6.0\BlazorApp.Web.GeneratedMSBuildEditorConfig.editorconfig
-D:\purvik\projects\Test Project\BlazorApp\BlazorApp\obj\Debug\net6.0\BlazorApp.Web.AssemblyInfoInputs.cache
-D:\purvik\projects\Test Project\BlazorApp\BlazorApp\obj\Debug\net6.0\BlazorApp.Web.AssemblyInfo.cs
-D:\purvik\projects\Test Project\BlazorApp\BlazorApp\obj\Debug\net6.0\BlazorApp.Web.csproj.CoreCompileInputs.cache
-D:\purvik\projects\Test Project\BlazorApp\BlazorApp\obj\Debug\net6.0\BlazorApp.Web.MvcApplicationPartsAssemblyInfo.cache
-D:\purvik\projects\Test Project\BlazorApp\BlazorApp\obj\Debug\net6.0\BlazorApp.Web.RazorAssemblyInfo.cache
-D:\purvik\projects\Test Project\BlazorApp\BlazorApp\obj\Debug\net6.0\BlazorApp.Web.RazorAssemblyInfo.cs
