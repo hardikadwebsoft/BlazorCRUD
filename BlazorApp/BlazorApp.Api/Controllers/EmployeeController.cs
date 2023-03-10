@@ -30,8 +30,9 @@ namespace BlazorApp.Api.Controllers
             return empList;
         }
 
-        [Route("Create")]
+       
         [HttpPost]
+        [Route("Create")]
         public async Task<EmployeeViewModel> Create(EmployeeViewModel employeeViewModel)
         {
             await _employeeRepository.Create(employeeViewModel);
@@ -42,7 +43,6 @@ namespace BlazorApp.Api.Controllers
         [HttpPut]
         public async Task Update(EmployeeViewModel employeeViewModel)
         {
-
             await _employeeRepository.Update(employeeViewModel);
         }
 
@@ -53,8 +53,8 @@ namespace BlazorApp.Api.Controllers
             await _employeeRepository.Delete(id);
         }
 
-        [HttpGet]
         [Route("Search/{searchString}")]
+        [HttpGet]       
         public async Task<List<EmployeeViewModel>> Search(string searchString)
         {
             var empList = await _employeeRepository.Search(searchString);

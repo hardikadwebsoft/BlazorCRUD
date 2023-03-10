@@ -46,7 +46,7 @@
         <div class="col-md-6 ">
             <label for="department">Department</label>
            <InputSelect id="department" @bind-Value="EmployeeViewModel.Department" class="form-control form-select">
-                @foreach (var department in EmployeeViewModel.Departments)
+                @foreach (var department in Departments)
                 {
                     <option value="@department.Name">@department.Name</option>
                 }
@@ -94,15 +94,19 @@
 
     private string btnText = string.Empty;
 
+    private List<DepartmentViewModel> Departments = new List<DepartmentViewModel>();
+
     [Required(ErrorMessage = "BirthDate is required")]
     private DateTime dateTime = DateTime.Now;
 
     protected override void OnInitialized()
     {
         btnText = IsAddSection ? "Save" : "Update";
+
         if (!IsAddSection)
             dateTime =Convert.ToDateTime(EmployeeViewModel.DateOfBirth);
-        EmployeeViewModel.Departments = new List<DepartmentViewModel>
+
+        Departments = new List<DepartmentViewModel>
         {
             new DepartmentViewModel(1, "Development"),
             new DepartmentViewModel(2, "Testing"),
@@ -117,7 +121,7 @@
     {
         EmployeeViewModel.DateOfBirth = dateTime.ToString("dd MMM yyyy");
         if (IsAddSection)
-        {
+        {            
             await _client.PostAsJsonAsync<EmployeeViewModel>(Environment.GetEnvironmentVariable("ApiURL") + ServiceConstant.CreateEmployee , EmployeeViewModel);
         }
         else

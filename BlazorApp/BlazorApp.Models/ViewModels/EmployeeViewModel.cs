@@ -22,7 +22,6 @@ namespace BlazorApp.Models.ViewModels
         public string DateOfBirth { get; set; }
         public string Department { get; set; }
 
-        public List<DepartmentViewModel> Departments { get; set; }
     }
 
     
