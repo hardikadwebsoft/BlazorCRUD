@@ -14,5 +14,9 @@ namespace BlazorApp.Models.Helpers
         public static string UpdateEmployee = "/api/Employee/Update";
         public static string DeleteEmployee = "/api/Employee/Delete?id=";
         public static string SearchEmployee = "/api/Employee/Search/";
+
+
+        public static string GetDepartments = "/api/Department/GetList";
+        public static string GetDepartment = "/api/Department/GetById?id=";
     }
 }

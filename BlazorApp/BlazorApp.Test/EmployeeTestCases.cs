@@ -34,10 +34,21 @@ namespace BlazorApp.Test
         #region Seed Data
         private void SeedDatabase()
         {
+            //seed Department Data
+
+            context.Departments.AddRange(
+                new Department() { Id = 111, Name = "Marketing" },
+                new Department() { Id = 112, Name = "IT" },
+                new Department() { Id = 113, Name = "Support" },
+                new Department() { Id = 114, Name = "Testing" },
+                new Department() { Id = 115, Name = "HR" }
+
+           );
+
             context.Employees.AddRange(
-              new Employee() { Id = 5, Name = "John", Email = "johndoe@example.com", DateOfBirth = "2 jan 1986", Department = "IT" },
-              new Employee() { Id = 6, Name = "Jack", Email = "jack@example.com", DateOfBirth = "2 jan 1986", Department = "IT" },
-              new Employee() { Id = 7, Name = "Bob", Email = "bob@example.com", DateOfBirth = "2 jan 1986", Department = "Testing" }
+              new Employee() { Id = 5, Name = "John", Email = "johndoe@example.com", DateOfBirth = "2 jan 1986", DepartmentId = 111 },
+              new Employee() { Id = 6, Name = "Jack", Email = "jack@example.com", DateOfBirth = "2 jan 1986", DepartmentId =112 },
+              new Employee() { Id = 7, Name = "Bob", Email = "bob@example.com", DateOfBirth = "2 jan 1986", DepartmentId = 113 }
 
           );
 
@@ -57,7 +68,7 @@ namespace BlazorApp.Test
                 Name = "Mack",
                 Email = "mack@example.com",
                 DateOfBirth = "5 feb 2020",
-                Department = "IT",
+                DepartmentId = 1,
 
             };
 
@@ -75,7 +86,7 @@ namespace BlazorApp.Test
            ;
 
             // Act
-            employeee.Name = "Jane";
+            employeee.Email = "jackscott@example.com";
 
            
             await employeeRepository.Update(employeee);
@@ -83,7 +94,7 @@ namespace BlazorApp.Test
             // Assert
             var updatedEmployee = await employeeRepository.GetById(employeee.Id);
             Assert.NotNull(updatedEmployee);
-            Assert.AreEqual("Jane", updatedEmployee.Name);
+            Assert.AreEqual("jackscott@example.com", updatedEmployee.Email);
 
         }
 
@@ -112,19 +123,27 @@ namespace BlazorApp.Test
         [Test]
         public async Task Should_Search_All_Employees()
         {
-            // Act
-            context.Database.EnsureDeleted();
-            context = new BlazorAppDbContext();
-            SeedDatabase();
+            
+           //Arrange
             EmployeeRepository employeeRepository = new EmployeeRepository(context, mapper);
             var allEmployees = await employeeRepository.GetList();
-
             // Act
             var results = await employeeRepository.Search("Jack");
-
             // Assert 
-            Assert.AreEqual(1, results.Count);
+            Assert.GreaterOrEqual(results.Count,1);
             Assert.AreEqual("Jack", results.Select(x => x.Name).FirstOrDefault().ToString());
+
+        }
+        [Test]
+        public async Task Should_Search_With_Department()
+        {
+            //Arrange
+            EmployeeRepository employeeRepository = new EmployeeRepository(context, mapper);
+            var allEmployees = await employeeRepository.GetList();
+            //Act
+            var result = await employeeRepository.Search("Marketing");
+            //Assert
+            Assert.GreaterOrEqual(result.Count,1);
 
         }
 

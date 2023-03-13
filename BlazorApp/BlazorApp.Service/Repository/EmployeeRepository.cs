@@ -45,7 +45,7 @@ namespace BlazorApp.Service
             var results = new List<EmployeeViewModel>();
             try
             {
-                var employees = await _context.Employees.AsNoTracking().ToListAsync();
+                var employees = await _context.Employees.Include(t=>t.Department).AsNoTracking().ToListAsync();
                 results = _mapper.Map<List<EmployeeViewModel>>(employees);
                 return results;
             }
@@ -59,7 +59,7 @@ namespace BlazorApp.Service
         {
             try
             {
-                var employee =await  _context.Employees.AsNoTracking().FirstOrDefaultAsync(x=>x.Id == id);
+                var employee =await  _context.Employees.Include(t => t.Department).AsNoTracking().FirstOrDefaultAsync(x=>x.Id == id);
                           
                 var result = _mapper.Map<EmployeeViewModel>(employee);
                 return result;
@@ -126,7 +126,7 @@ namespace BlazorApp.Service
             {
                 var stringcomparison = StringComparison.InvariantCultureIgnoreCase;
               
-                var employees = await _context.Employees.Where(x=>x.Name.Contains(searchString, stringcomparison) || x.Email.Contains(searchString, stringcomparison) || x.Department.Contains(searchString, stringcomparison)).ToListAsync();
+                var employees = await _context.Employees.Include(t=>t.Department).Where(x=>x.Name.Contains(searchString, stringcomparison) || x.Email.Contains(searchString, stringcomparison) || x.Department.Name.Contains(searchString, stringcomparison)).ToListAsync();
                 results = _mapper.Map<List<EmployeeViewModel>>(employees);
                 return results;
             }

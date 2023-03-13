@@ -15,10 +15,16 @@ namespace BlazorApp.Api.AutoMapper
         /// </summary>
         public MappingProfile() 
         {
+            CreateMap<Department, DepartmentViewModel>();
+
             CreateMap<Employee, EmployeeFormModel>();
             CreateMap<EmployeeFormModel, Employee>();
-            CreateMap<Employee, EmployeeViewModel>();
-            CreateMap<EmployeeViewModel, Employee>();
+            CreateMap<Employee, EmployeeViewModel>()
+                .ForMember(dest => dest.DepartmentViewModel, opt => opt.MapFrom(src => src.Department));
+            CreateMap<EmployeeViewModel, Employee>()
+                .ForMember(dest=>dest.Department ,opt=>opt.MapFrom(src=>src.DepartmentViewModel));
+
+            CreateMap<DepartmentViewModel, Department>();
         }
     }
 }

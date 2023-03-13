@@ -1,5 +1,6 @@
 using BlazorApp.Data.Data;
 using BlazorApp.Service;
+using BlazorApp.Service.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<BlazorAppDbContext>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

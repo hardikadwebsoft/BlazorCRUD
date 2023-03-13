@@ -45,13 +45,13 @@
         </div>
         <div class="col-md-6 ">
             <label for="department">Department</label>
-           <InputSelect id="department" @bind-Value="EmployeeViewModel.Department" class="form-control form-select">
-                @foreach (var department in Departments)
+           <InputSelect id="department" @bind-Value="EmployeeViewModel.DepartmentId" class="form-control form-select">
+                @foreach (var department in deptList)
                 {
-                    <option value="@department.Name">@department.Name</option>
+                    <option value="@department.Id">@department.Name</option>
                 }
             </InputSelect>
-            <ValidationMessage For="@(()=>EmployeeViewModel.Department)" />
+            <ValidationMessage For="@(()=>EmployeeViewModel.DepartmentId)" />
         </div>
         
         <br />
@@ -83,43 +83,36 @@
 
 
 @code {
-    [Parameter]
-    public EmployeeViewModel EmployeeViewModel { get; set; } = new();
+        [Parameter]
+        public EmployeeViewModel EmployeeViewModel { get; set; } = new();
 
-    [Parameter]
-    public bool IsAddSection { get; set; } = false;
+        [Parameter]
+        public bool IsAddSection { get; set; } = false;
 
-    [Parameter]
-    public string View { get; set; }
+        [Parameter]
+        public string View { get; set; }
 
     private string btnText = string.Empty;
 
-    private List<DepartmentViewModel> Departments = new List<DepartmentViewModel>();
+    private List<DepartmentViewModel> deptList = new List<DepartmentViewModel>();
 
     [Required(ErrorMessage = "BirthDate is required")]
     private DateTime dateTime = DateTime.Now;
 
-    protected override void OnInitialized()
+    protected override async Task OnParametersSetAsync()
     {
         btnText = IsAddSection ? "Save" : "Update";
 
         if (!IsAddSection)
             dateTime =Convert.ToDateTime(EmployeeViewModel.DateOfBirth);
 
-        Departments = new List<DepartmentViewModel>
-        {
-            new DepartmentViewModel(1, "Development"),
-            new DepartmentViewModel(2, "Testing"),
-            new DepartmentViewModel(3, "Marketing"),
-            new DepartmentViewModel(4, "Sales"),
-            new DepartmentViewModel(5, "Support"),
-            new DepartmentViewModel(6, "IT"),
-        };
+        deptList = await _client.GetFromJsonAsync<List<DepartmentViewModel>>(Environment.GetEnvironmentVariable("ApiURL") + ServiceConstant.GetDepartments);      
     }
 
     async Task HandleSubmit()
     {
         EmployeeViewModel.DateOfBirth = dateTime.ToString("dd MMM yyyy");
+        EmployeeViewModel.DepartmentViewModel= await _client.GetFromJsonAsync<DepartmentViewModel>(Environment.GetEnvironmentVariable("ApiURL") + ServiceConstant.GetDepartment+EmployeeViewModel.DepartmentId); 
         if (IsAddSection)
         {            
             await _client.PostAsJsonAsync<EmployeeViewModel>(Environment.GetEnvironmentVariable("ApiURL") + ServiceConstant.CreateEmployee , EmployeeViewModel);

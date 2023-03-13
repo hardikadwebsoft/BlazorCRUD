@@ -20,8 +20,9 @@ namespace BlazorApp.Models.ViewModels
         public string Email { get; set; }
         
         public string DateOfBirth { get; set; }
-        public string Department { get; set; }
+        public int DepartmentId { get; set; }
 
+        public DepartmentViewModel DepartmentViewModel { get; set; } = new();
     }
 
     

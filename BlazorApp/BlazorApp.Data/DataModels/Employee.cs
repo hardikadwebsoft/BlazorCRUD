@@ -12,6 +12,7 @@ namespace BlazorApp.Data.DataModels
         public string Name { get; set; }
         public string Email { get; set; }
         public string DateOfBirth { get; set; }
-        public string Department { get; set; }
+        public int DepartmentId { get; set; }
+        public Department Department { get; set; }
     }
 }
